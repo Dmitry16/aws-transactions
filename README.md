@@ -2,7 +2,7 @@ The app is developed making use of Node.js Express framework and converted to ru
 
 Top-level design overview:
 
-When get request hits the "get-transactions" end-point a set of carrencies rates from the api.exchangeratesapi.io is fetched then random transactions are generated and finally are posted to the 'process-transactions' end-point. When server recieves a post request it processes the data converting transactions to different shape.
+When get request hits the "get-transactions" end-point a set of currencies rates from the api.exchangeratesapi.io is fetched then random transactions are generated and finally are posted to the 'process-transactions' end-point. When server recieves a post request it processes the data converting transactions to different shape.
 
 AWS end-points:
 
