@@ -11,7 +11,7 @@
     "accountId": "860595185481"
   },
   "scripts": {
-    "start": "nodemon app.local.js",
+    "start": "node app.local.js",
     "config": "node ./scripts/configure.js",
     "deconfig": "node ./scripts/deconfigure.js",
     "local": "node scripts/local",
