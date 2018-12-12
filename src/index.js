@@ -19,7 +19,7 @@ app.get('/get-transactions', async (req, res) => {
     
     const query = 'base=EUR';
     const { baseUrl } = require('./config');
-    
+
     let data = await getCurrenciesRates(request, baseUrl, query);
     
     let randomTransactions = generateRandomTransactions(baseUrl, query, data);
