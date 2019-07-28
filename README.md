@@ -1,8 +1,8 @@
-Top-level design overview:
+The top-level design overview:
 
 The app is developed with Node.js Express framework and converted to run on top of AWS Lambda as a service using "aws-serverless-express" framework.
 
-When a "get" request hits the "get-transactions" end-point a set of currency rates from the api.exchangeratesapi.io resource is fetched. After that random transactions are generated and finally are posted to the 'process-transactions' end-point. When server recieves a post request it processes the data converting transactions to different shape.
+When a get request hits the "get-transactions" end-point a set of currency rates from the api.exchangeratesapi.io resource is fetched. After that random transactions are generated and finally are posted to the 'process-transactions' end-point. When server recieves a post request it processes the data converting transactions to different shape.
 
 AWS end-points:
 
