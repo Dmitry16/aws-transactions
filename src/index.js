@@ -5,7 +5,9 @@ const { setRandomCurrency, setRandomAmount } = require('./utils')
 const bodyParser = require('body-parser');
 
 const app = express();
+
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(bodyParser.json());
 // no caching set up
 app.use((req, res, next) => {
@@ -16,25 +18,18 @@ app.use((req, res, next) => {
 // from api.exchangeratesapi.io are fetched then random transactions are generated
 // and are posted to the 'process-transactions' end-point
 app.get('/get-transactions', async (req, res) => {
-    
     const query = 'base=EUR';
     const { baseUrl } = require('./config');
-
     let data = await getCurrenciesRates(request, baseUrl, query);
-    
     let randomTransactions = generateRandomTransactions(baseUrl, query, data);
-    
     postProcessTransactions(randomTransactions);
-    
     res.send(randomTransactions);
 });
 
 let convertedTransactions = [];
-
 // here we extract the data (transactions) from the post request and 
 // convert them. if everything is OK we send the confirmation
 app.post('/process-transactions', (req, res) => {
-
     let bodyStr = '';
     req.on('data',function(chunk) {
         bodyStr += chunk.toString();
@@ -60,14 +55,13 @@ app.get('/process-transactions', (req, res) => {
 });
 
 function postProcessTransactions(transactions) {
-
     if (process.env.AWS_EXECUTION_ENV) {
         uri = 'https://emjaznxwwe.execute-api.eu-west-1.amazonaws.com/prod/process-transactions';
     }
     if (process.env.NODE) {
         uri = 'http://localhost:3000/process-transactions'
     }
-
+    
     request({
         method: 'POST',
         uri: uri,

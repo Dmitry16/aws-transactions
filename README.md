@@ -1,4 +1,4 @@
-The top-level design overview:
+High Level Design Overview:
 
 The app is developed with Node.js Express framework and converted to run on top of AWS Lambda as a service using "aws-serverless-express" framework.
 
