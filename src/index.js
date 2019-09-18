@@ -1,8 +1,10 @@
 const express = require('express');
 const request = require('request');
+const bodyParser = require('body-parser');
+var createError = require('http-errors');
+let { HttpError } = require('error');
 const Transaction = require('./transaction');
 const { setRandomCurrency, setRandomAmount } = require('./utils')
-const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -13,6 +15,10 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
     res.header('Cache-Control', 'no-store');
     next();
+});
+
+app.use(function(req, res, next) {
+    next(createError(404));
 });
 // when GET request hits the "get-transactions" end-point the carrenies rates
 // from api.exchangeratesapi.io are fetched then random transactions are generated
