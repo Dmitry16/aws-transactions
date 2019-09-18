@@ -16,10 +16,6 @@ app.use((req, res, next) => {
     res.header('Cache-Control', 'no-store');
     next();
 });
-
-app.use(function(req, res, next) {
-    next(createError(404));
-});
 // when GET request hits the "get-transactions" end-point the carrenies rates
 // from api.exchangeratesapi.io are fetched then random transactions are generated
 // and are posted to the 'process-transactions' end-point
@@ -30,6 +26,21 @@ app.get('/get-transactions', async (req, res) => {
     let randomTransactions = generateRandomTransactions(baseUrl, query, data);
     postProcessTransactions(randomTransactions);
     res.send(randomTransactions);
+});
+
+app.use(function(req, res, next) {
+    next(createError(404));
+});
+
+app.use(require('middleware/sendHttpError'));
+// error handler
+app.use(function(err, req, res, next) {
+  if (typeof err === 'number') {
+    err = new HttpError(err);
+  }
+  if (err instanceof HttpError) {
+    res.sendHttpError(err);
+  }
 });
 
 let convertedTransactions = [];
