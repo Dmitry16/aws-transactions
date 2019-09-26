@@ -28,21 +28,6 @@ app.get('/get-transactions', async (req, res) => {
     res.send(randomTransactions);
 });
 
-app.use(function(req, res, next) {
-    next(createError(404));
-});
-
-app.use(require('middleware/sendHttpError'));
-// error handler
-app.use(function(err, req, res, next) {
-  if (typeof err === 'number') {
-    err = new HttpError(err);
-  }
-  if (err instanceof HttpError) {
-    res.sendHttpError(err);
-  }
-});
-
 let convertedTransactions = [];
 // here we extract the data (transactions) from the post request and 
 // convert them. if everything is OK we send the confirmation
@@ -69,6 +54,22 @@ app.post('/process-transactions', (req, res) => {
 // sending the converted transactions
 app.get('/process-transactions', (req, res) => {
     res.send(convertedTransactions);
+});
+
+// error handling
+app.use(function(req, res, next) {
+    next(createError(404));
+});
+
+app.use(require('middleware/sendHttpError'));
+
+app.use(function(err, req, res, next) {
+  if (typeof err === 'number') {
+    err = new HttpError(err);
+  }
+  if (err instanceof HttpError) {
+    res.sendHttpError(err);
+  }
 });
 
 function postProcessTransactions(transactions) {
